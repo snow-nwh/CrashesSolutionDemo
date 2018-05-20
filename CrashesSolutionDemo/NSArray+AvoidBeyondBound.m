@@ -30,6 +30,11 @@
     Method original3 = class_getInstanceMethod(NSClassFromString(@"__NSArrayI"), @selector(objectAtIndexedSubscript:));
     Method new3 = class_getInstanceMethod(NSClassFromString(@"__NSArrayI"), @selector(ABObject3AtIndex:));
     method_exchangeImplementations(original3, new3);
+    
+    //可变数组添加元素
+    Method origin4 = class_getInstanceMethod(NSClassFromString(@"__NSArrayM"), @selector(insertObject:atIndex:));
+    Method new4 = class_getInstanceMethod(NSClassFromString(@"__NSArrayM"), @selector(ABObjectsInsertObj:atIndex:));
+    method_exchangeImplementations(origin4, new4);
 }
 
 - (id)ABObjectAtIndex:(NSUInteger)index {
@@ -60,6 +65,14 @@
         return [NSNull null];
     } else {
         return [self ABObject3AtIndex:index];
+    }
+}
+- (void)ABObjectsInsertObj:(id)obj atIndex:(NSUInteger)index {
+    if (!obj || obj == nil) {
+//        NSParameterAssert(0);
+        [self ABObjectsInsertObj:[NSNull null] atIndex:index];
+    } else {
+        [self ABObjectsInsertObj:obj atIndex:index];
     }
 }
 @end

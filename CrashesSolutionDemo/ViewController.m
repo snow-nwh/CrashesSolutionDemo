@@ -7,7 +7,12 @@
 //
 
 #import "ViewController.h"
+
+#if DEBUG
+
+#else
 #import "NSArray+AvoidBeyondBound.h"
+#endif
 
 @interface ViewController ()
 
@@ -27,6 +32,11 @@
     NSLog(@"array2 - %@",array2[10]);
     NSLog(@"array3 - %@",[array3 objectAtIndex:10]);
     NSLog(@"array3 - %@",array3[10]);
+    
+    id obj = nil;
+    NSMutableArray *marray = [NSMutableArray array];
+    [marray addObject: obj];
+    [marray insertObject:obj atIndex:0];
 }
 
 
